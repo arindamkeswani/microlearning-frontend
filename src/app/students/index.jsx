@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import cn from "clsx";
 import { createRoutes } from "../../App";
-import { routes } from "./routes";
+// import { routes } from "./routes";
 import { Routes } from "react-router-dom";
 import SideNavbar from "../shared/SideNavbar/SideNavbar";
 
@@ -48,7 +48,7 @@ const StudentHomeScreen = () => {
           }
         )}
       >
-        <Routes>{createRoutes(routes)}</Routes>
+        {/* <Routes>{createRoutes(routes)}</Routes> */}
       </div>
     </div>
   );
