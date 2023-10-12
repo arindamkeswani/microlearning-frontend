@@ -25,13 +25,18 @@ const VideoCard = ({
   const [isMuted, setIsMuted] = useState(true);
 
   const toggleMute = () => {
-    const video = videoRef.current;
-    video.muted = !video.muted;
-    setIsMuted(video.muted);
+    const video = videoRef?.current;
+    video.muted = !video?.muted;
+    setIsMuted(video?.muted);
   };
   const replayVideo = () => {
-    const video = videoRef.current;
-    video.play();
+    const video = videoRef?.current;
+    !(
+      video?.currentTime > 0 &&
+      !video?.paused &&
+      !video?.ended &&
+      video?.readyState > video?.HAVE_CURRENT_DATA
+    ) && video?.play();
   };
   const [showQuiz, setShowQuiz] = useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(null);
@@ -60,7 +65,9 @@ const VideoCard = ({
     observer.observe(containerRef.current);
     setForceRender(false);
     return () => {
-      observer.unobserve(containerRef.current);
+      observer &&
+        containerRef?.current &&
+        observer.unobserve(containerRef.current);
     };
   }, [listRef]);
 
@@ -72,10 +79,16 @@ const VideoCard = ({
             top: containerRef?.current?.offsetTop - 10,
             behavior: "smooth",
           });
-          videoRef.current.play();
+          const video = videoRef.current;
+          !(
+            video?.currentTime > 0 &&
+            !video?.paused &&
+            !video?.ended &&
+            video?.readyState > video?.HAVE_CURRENT_DATA
+          ) && videoRef?.current?.play();
         }, 500)();
       } else {
-        videoRef.current.pause();
+        videoRef?.current?.pause();
       }
     });
   };
@@ -153,15 +166,15 @@ const VideoCard = ({
         </div>
       </div>
       {showTransScript && (
-        <div className="w-[400px] bg-gray-200 shadow-md right-[-20rem] z-20 bottom-0 h-[380px] px-3 absolute justify-around rounded-md transition-all duration-300">
-          <div className="flex flex-col h-full justify-around relative">
+        <div className="w-[400px] bg-gray-200 shadow-md right-[-20rem] z-20 bottom-0 max-h-[380px] min-h-[240px] overflow-auto px-3 absolute justify-around rounded-md transition-all duration-300">
+          <div className="flex flex-col h-full  relative divide-solid divide-y-2">
             <button
               className="absolute top-2 right-4 text-black text-lg font-bold"
               onClick={() => setShowTransScript(false)}
             >
               <i className="fa-solid fa-xmark"></i>
             </button>
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-2 items-center my-5">
               <button
                 className={`py-2 px-4 rounded-t-lg border-b-2 ${
                   activeTab === "english"
