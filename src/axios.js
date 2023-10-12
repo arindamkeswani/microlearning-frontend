@@ -3,6 +3,8 @@ import axios from "axios";
 export const BASE_URL =
   "http://microlearning-backend.ap-south-1.elasticbeanstalk.com";
 
+export const CLOUDFRONT_BASE_URL = "https://d3lf1ujcjce6zc.cloudfront.net";
+
 axios.interceptors.request.use(
   (config) => {
     return config;
