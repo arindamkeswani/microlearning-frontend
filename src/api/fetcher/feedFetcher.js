@@ -1,6 +1,6 @@
 import { Client } from "../../axios";
 
-export const getProducts = async (params) => {
+export const getFeed = async (params) => {
   const {
     data: { data },
   } = await Client.get("/quick-learning/feed", {
