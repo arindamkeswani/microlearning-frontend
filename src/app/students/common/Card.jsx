@@ -1,4 +1,5 @@
 import React from "react";
+import { CLOUDFRONT_BASE_URL } from "../../../axios";
 
 const Card = ({ data }) => {
   const { name, description, urls, price, discount, tags, rating } = data;
@@ -7,7 +8,7 @@ const Card = ({ data }) => {
     <div className="w-[16rem] rounded-lg overflow-hidden relative h-[26rem] border mb-4">
       <div className="w-full h-[15rem]">
         <img
-          src={urls[0]}
+          src={`${CLOUDFRONT_BASE_URL}/${urls[0]}`}
           className="w-full h-full contain"
           alt="thumbnail"
           loading="lazy"
@@ -29,7 +30,8 @@ const Card = ({ data }) => {
           <div className="flex mb-2 flex-col">
             <div>
               <span className="text-[#1b2124] text-base font-semibold">
-                ${price}
+                <i className="fa-solid fa-indian-rupee-sign text-sm"></i>{" "}
+                {price}
               </span>
               {discount > 0 && (
                 <span className="text-[#46b586] text-sm font-semibold ml-1">
@@ -39,7 +41,8 @@ const Card = ({ data }) => {
             </div>
             {discount > 0 ? (
               <span className="text-[14px] text-gray-400 font-[400] line-through">
-                {price + (price * discount) / 100}
+                <i className="fa-solid fa-indian-rupee-sign text-xs"></i>{" "}
+                {parseInt(price + (price * discount) / 100)}
               </span>
             ) : (
               <span className="text-[14px] text-gray-400 font-[400] line-through invisible">
@@ -47,8 +50,8 @@ const Card = ({ data }) => {
               </span>
             )}
           </div>
-          <span className="text-sm font-medium bg-[#46b586] h-fit px-2 rounded text-white flex items-center gap-0.5">
-            <i className="fa-solid fa-star text-xs"></i> {rating}
+          <span className="font-medium bg-[#46b586] text-xs h-fit px-2 py-.5 rounded text-white flex items-center gap-0.5">
+            <i className="fa-solid fa-star "></i> {rating}
           </span>
         </div>
       </div>

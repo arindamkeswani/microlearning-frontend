@@ -12,3 +12,8 @@ export const getProducts = async (params) => {
     // totalPages: limit !== "none" ? Math.ceil(totalCount / limit) : 1,
   };
 };
+
+export const addItems = async ({ payload }) => {
+  const res = Client.post("/items", payload);
+  return res;
+};

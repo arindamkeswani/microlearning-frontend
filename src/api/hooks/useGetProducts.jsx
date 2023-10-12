@@ -4,7 +4,7 @@ import { getProducts } from "../fetcher/productFetcher";
 const FALLBACK_RESPONSE = { data: [] };
 export const useGetProducts = ({ params }) => {
   const { data, isFetching } = useQuery(
-    ["Get_Products", params.type, params.page],
+    [`get-${params.type}`, params.type, params.page],
     () => getProducts(params)
   );
 

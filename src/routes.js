@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import AdminHomeScreen from "./app/admin";
 import Login from "./app/login/Login";
 import StudentHomeScreen from "./app/students";
@@ -6,7 +7,7 @@ export const routes = [
   {
     path: "/",
     component: () => {
-      return <>Home Screen</>;
+      return <Navigate to="/login" />;
     },
   },
   {

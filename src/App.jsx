@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import "./App.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
@@ -8,11 +14,10 @@ import Header from "./app/shared/Header/Header";
 import { useSelector } from "react-redux";
 
 const AuthenticatedRoute = ({ children }) => {
-  const navigate = useNavigate();
   const { user } = useSelector((store) => store.user) || {};
   console.log(user?.[0], user, {});
   if (Object.keys(user?.[0] || user || {}).length <= 1) {
-    navigate("/login");
+    return <Navigate to="/login" />;
   }
   return children;
 };
