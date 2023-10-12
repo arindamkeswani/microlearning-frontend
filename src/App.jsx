@@ -41,7 +41,7 @@ function App() {
       queries: {
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
-        retry: 1,
+        retry: false,
       },
     },
   });

@@ -135,7 +135,7 @@ const Login = () => {
             <div className="justify-center m-auto">
               <Button
                 disabled={!isValidNumber || !phoneNumber}
-                className="rou rounded-[25px] p-[15px] w-[90%] m-auto mb-5 disabled:bg-[#B4B4B4] disabled:text-[#fff] border-0 bg-[#5a4bda] text-xl"
+                className="rounded-[25px] p-[15px] w-[90%] m-auto mb-5 disabled:bg-[#B4B4B4] disabled:text-[#fff] border-0 bg-[#5a4bda] text-xl"
                 style={{ boxShadow: "0 7px 11px #5315cf38" }}
                 onClick={() => {
                   setIsNumberSaved(true);
@@ -198,7 +198,7 @@ const Login = () => {
             <div className="justify-center m-auto mt-10">
               <Button
                 disabled={optArray.join("").length !== 6}
-                className="rou rounded-[25px] p-[12px] w-[100%] m-auto mb-5 disabled:bg-[#B4B4B4] disabled:text-[#fff] border-0 bg-[#5a4bda] text-xl"
+                className="rounded-[25px] p-[12px] w-[100%] m-auto mb-5 disabled:bg-[#B4B4B4] disabled:text-[#fff] border-0 bg-[#5a4bda] text-xl"
                 style={{ boxShadow: "0 7px 11px #5315cf38" }}
                 onClick={() => {
                   loginFetcher(
