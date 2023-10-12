@@ -16,26 +16,29 @@ const LeaderboardScreen = ({}) => {
   const sortedStudents = students.sort((a, b) => b.creditScore - a.creditScore);
 
   return (
-    <div className="container w-[80%] mx-auto py-4 pt-5">
+    <div className="container w-[80%] mx-auto mt-8 shadow-lg shadow-slate-300">
       <ul className="divide-y divide-gray-200 ">
         {sortedStudents.map((student, index) => (
           <li
             key={student.id}
             className={`py-4 flex items-center justify-between px-4 ${
-              index === 0 ? "bg-[#5664ff] text-white" : ""
+              index === 0 ? "bg-[#5A4BDA] text-white rounded" : ""
             }`}
           >
             <div>
               <span className="text-2xl mr-5 font-bold">{index + 1}.</span>
               <span className="text-xl font-semibold">{student.name}</span>
             </div>
-            <span className="text-xl font-semibold flex item-center">
+            <span className="text-xl font-semibold flex item-center gap-2 ">
               {student.creditScore}
-              {index === 0 && (
-                <img
-                  src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true"
-                  alt="gold medal"
-                />
+              {index === 0 ? (
+                <i className="fa-solid text-lg fa-trophy text-yellow-300"></i>
+              ) : index === 1 ? (
+                <i className="fa-solid text-lg fa-trophy text-slate-400"></i>
+              ) : index === 2 ? (
+                <i className="fa-solid text-lg fa-trophy text-[#d97706]"></i>
+              ) : (
+                false
               )}
             </span>
           </li>

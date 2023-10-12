@@ -30,10 +30,9 @@ const tabs = [
 ];
 
 const StudentHomeScreen = () => {
-  console.log("student");
   const [isCollapse, setIsCollapse] = useState(false);
   return (
-    <div className={cn("w-full gap-4 h-[calc(100vh-75px)] relative")}>
+    <div className={cn("w-full gap-4 h-full relative overflow-hidden")}>
       <SideNavbar
         tabs={tabs}
         isCollapse={isCollapse}
@@ -41,7 +40,7 @@ const StudentHomeScreen = () => {
       />
       <div
         className={cn(
-          "h-full transition-all duration-300 scrollbar-none  absolute pb-3",
+          "h-full transition-all duration-300 scrollbar-none  absolute overflow-hidden",
           {
             "left-[18%] sm:left-[10%] lg:left-[7%] w-[82%] sm:w-[90%] lg:w-[93%]":
               isCollapse,

@@ -15,7 +15,6 @@ import { useSelector } from "react-redux";
 
 const AuthenticatedRoute = ({ children }) => {
   const { user } = useSelector((store) => store.user) || {};
-  console.log(user?.[0], user, {});
   if (Object.keys(user?.[0] || user || {}).length <= 1) {
     return <Navigate to="/login" />;
   }
@@ -52,13 +51,13 @@ function App() {
     },
   });
   return (
-    <div className="App h-full">
+    <div className="App h-[100vh] overflow-hidden">
       <QueryClientProvider client={queryClient}>
         {/* <Suspense fallback={<FullScreenLoader />}> */}
         <BrowserRouter>
           <Header />
           <div className="h-[75px]"></div>
-          <div className="h-[calc(100vh-75px)]">
+          <div className="h-[calc(100vh-75px)] overflow-hidden">
             <Routes>{createRoutes(routes)}</Routes>
           </div>
         </BrowserRouter>

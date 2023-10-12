@@ -1,6 +1,6 @@
 import { Client } from "../../axios";
 
-export const getProducts = async (params) => {
+export const getFeed = async (params) => {
   const {
     data: { data },
   } = await Client.get("/quick-learning/feed", {
@@ -11,9 +11,4 @@ export const getProducts = async (params) => {
     params: params.page,
     // totalPages: limit !== "none" ? Math.ceil(totalCount / limit) : 1,
   };
-};
-
-export const addItems = async ({ payload }) => {
-  const res = Client.post("/items", payload);
-  return res;
 };

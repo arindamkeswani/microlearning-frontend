@@ -7,7 +7,6 @@ export const uploadReelSlice = createSlice({
   initialState,
   reducers: {
     updateState: (state, action) => {
-      console.log(state, action);
       const newState = action.payload;
       Object.assign(state, newState);
     },

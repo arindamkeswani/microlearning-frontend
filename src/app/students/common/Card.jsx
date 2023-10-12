@@ -1,3 +1,4 @@
+import { Badge } from "flowbite-react";
 import React from "react";
 import { CLOUDFRONT_BASE_URL } from "../../../axios";
 
@@ -18,12 +19,15 @@ const Card = ({ data }) => {
         <div className="text-sm mb-2 font-medium">{name}</div>
         <div className="flex flex-wrap gap-1">
           {tags.map((data) => (
-            <span
-              key={data._id}
-              className={`inline-block bg-[#5664ff] text-white text-xs px-2 py-[2px] rounded`}
-            >
+            <Badge color="purple" key={data._id}>
               {data.name}
-            </span>
+            </Badge>
+            // <span
+            //   key={data._id}
+            //   className={`inline-block bg-[#5664ff] text-white text-xs px-2 py-[2px] rounded`}
+            // >
+            //   {data.name}
+            // </span>
           ))}
         </div>
         <div className="flex justify-between absolute bottom-0 w-[93%]">
