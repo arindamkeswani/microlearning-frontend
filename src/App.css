@@ -1,0 +1,25 @@
+.spinner-container {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+.spinner {
+  width: 100px;
+  height: 100px;
+  border: 10px solid transparent;
+  border-top: 10px solid #3498db; /* Color of the visible border */
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+.spinner-inner {
+  width: 100px;
+  height: 100px;
+  background: transparent; /* Transparent background */
+  border-radius: 50%;
+  position: absolute;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
