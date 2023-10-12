@@ -39,7 +39,7 @@ const StudentHomeScreen = () => {
       />
       <div
         className={cn(
-          "h-full transition-all duration-300 scrollbar-none overflow-hidden absolute pb-3",
+          "h-full transition-all duration-300 scrollbar-none  absolute pb-3",
           {
             "left-[18%] sm:left-[10%] lg:left-[7%] w-[82%] sm:w-[90%] lg:w-[93%]":
               isCollapse,

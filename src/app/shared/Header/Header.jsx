@@ -1,7 +1,7 @@
 const Header = () => {
   return (
     <>
-      <nav className="flex justify-between items-center w-full h-[75px] z-10 px-2.5 sm:px-7 py-4 shadow-lg fixed top-0 left-0">
+      <nav className="flex bg-white justify-between items-center w-full h-[75px] z-[999] px-2.5 sm:px-7 py-4 shadow-lg fixed top-0 left-0">
         {/* left section */}
         <div className="flex gap-2 sm:gap-4 items-center cursor-pointer">
           <img
