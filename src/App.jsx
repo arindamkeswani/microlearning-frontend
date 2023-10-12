@@ -1,10 +1,21 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { routes } from "./routes";
 import Header from "./app/shared/Header/Header";
+import { useSelector } from "react-redux";
+
+const AuthenticatedRoute = ({ children }) => {
+  const navigate = useNavigate();
+  const { user } = useSelector((store) => store.user) || {};
+  console.log(user?.[0], user, {});
+  if (Object.keys(user?.[0] || user || {}).length <= 1) {
+    navigate("/login");
+  }
+  return children;
+};
 
 export const createRoutes = (routes) =>
   routes.map((route) => (
@@ -13,10 +24,10 @@ export const createRoutes = (routes) =>
       path={route.path}
       element={
         route.auth ? (
-          // <AuthenticatedRoute>
-          <route.component />
+          <AuthenticatedRoute>
+            <route.component />
+          </AuthenticatedRoute>
         ) : (
-          // </AuthenticatedRoute>
           <route.component />
         )
       }

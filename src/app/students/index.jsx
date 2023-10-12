@@ -4,6 +4,7 @@ import { createRoutes } from "../../App";
 import { routes } from "./routes";
 import { Routes } from "react-router-dom";
 import SideNavbar from "../shared/SideNavbar/SideNavbar";
+// import { routes } from "../../routes";
 
 const tabs = [
   {
@@ -29,6 +30,7 @@ const tabs = [
 ];
 
 const StudentHomeScreen = () => {
+  console.log("student");
   const [isCollapse, setIsCollapse] = useState(false);
   return (
     <div className={cn("w-full gap-4 h-[calc(100vh-75px)] relative")}>
@@ -39,7 +41,7 @@ const StudentHomeScreen = () => {
       />
       <div
         className={cn(
-          "h-full transition-all duration-300 scrollbar-none overflow-hidden absolute pb-3",
+          "h-full transition-all duration-300 scrollbar-none  absolute pb-3",
           {
             "left-[18%] sm:left-[10%] lg:left-[7%] w-[82%] sm:w-[90%] lg:w-[93%]":
               isCollapse,
