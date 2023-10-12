@@ -115,7 +115,11 @@ const ReelUploadSteps = ({ onClose }) => {
         onComplete={handlePublishContent}
       >
         {steps.map(({ title, render: Render, icon }, i) => (
-          <FormWizard.TabContent title={title} icon={icon}>
+          <FormWizard.TabContent
+            title={title}
+            icon={icon}
+            // className="min-h-[35rem]"
+          >
             <Render isTabsChanged={isTabsChanged} />
           </FormWizard.TabContent>
         ))}

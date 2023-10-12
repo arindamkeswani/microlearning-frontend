@@ -67,7 +67,7 @@ const QuestionGenerationForm = () => {
   );
 
   return (
-    <div className="p-3 h-96 overflow-auto my-3">
+    <div className="p-3 h-96 overflow-auto overflow-y-auto my-3">
       <div className="flex flex-col gap-4">
         <div className="flex gap-10 justify-center items-center">
           <div className="flex gap-6 items-center">
