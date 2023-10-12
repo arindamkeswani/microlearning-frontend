@@ -1,0 +1,11 @@
+.tab {
+  @apply flex items-center relative gap-4 text-left w-full text-xs lg:text-sm transition-all duration-300 text-black px-3 lg:px-4 xl:px-5;
+}
+
+.activeTab {
+  @apply !bg-primary relative !text-white !border-primary !border-2 !rounded-xl !py-1.5 sm:!py-2;
+}
+
+.activeSubTab {
+  @apply border-l-2 border-primary relative text-primary transition-colors duration-300 pl-3 cursor-pointer;
+}
