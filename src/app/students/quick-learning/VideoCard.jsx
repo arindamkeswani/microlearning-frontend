@@ -1,8 +1,9 @@
 // VideoCard.js
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import cn from "clsx";
 import QuizForm from "./QuizForm";
+import { debounce } from "../../../utils";
 
 const VideoCard = ({
   videoUrl,
@@ -11,8 +12,11 @@ const VideoCard = ({
   likes,
   comments,
   caption,
+  listRef,
+  setForceRender,
 }) => {
   const videoRef = useRef(null);
+  const containerRef = useRef(null);
   const [isMuted, setIsMuted] = useState(true);
 
   const toggleMute = () => {
@@ -34,10 +38,43 @@ const VideoCard = ({
   const handleAnswerSelected = (isCorrect) => {
     setIsCorrectAnswer(isCorrect);
   };
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.5, // Change this value as needed
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, options);
+    observer.observe(containerRef.current);
+    setForceRender(false);
+    return () => {
+      observer.unobserve(containerRef.current);
+    };
+  }, [listRef]);
+
+  const handleIntersection = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        debounce(() => {
+          listRef?.scrollTo({
+            top: containerRef?.current?.offsetTop - 10,
+            behavior: "smooth",
+          });
+          videoRef.current.play();
+        }, 500)();
+      } else {
+        videoRef.current.pause();
+      }
+    });
+  };
+
   return (
     <div
       name="scroll-to-element"
-      className="scroll-to-element w-[26rem] mx-auto bg-white mb-2 relative h-[75vh] flex"
+      className="scroll-to-element w-[26rem] mx-auto bg-white mb-2 relative h-[75vh] flex z-1 "
+      ref={containerRef}
     >
       <div className="z-10 absolute bottom-[1rem] flex flex-col w-full gap-2 px-4">
         <div className="flex gap-3 items-center">
@@ -48,7 +85,6 @@ const VideoCard = ({
       </div>
       <div className="absolute top-0 left-0 w-[80%]  h-full">
         <video
-          autoPlay
           muted
           controls
           ref={videoRef}
@@ -78,20 +114,20 @@ const VideoCard = ({
       <div className="absolute top-2 left-2 flex items-center space-x-2">
         <button className="bg-gray-600 rounded-full" onClick={toggleMute}>
           {isMuted ? (
-            <i class="fa-solid fa-volume-xmark text-xs text-white p-1"></i>
+            <i className="fa-solid fa-volume-xmark text-xs text-white p-1"></i>
           ) : (
-            <i class="fa-solid fa-volume-high text-xs text-white p-1"></i>
+            <i className="fa-solid fa-volume-high text-xs text-white p-1"></i>
           )}
         </button>
       </div>
       <div className="p-4 z-20 absolute right-0 bottom-0">
         <div className="flex flex-col gap-5 items-center">
           <button className="flex items-center flex-col cursor-pointer">
-            <i class="fa-regular fa-heart text-xl"></i>
+            <i className="fa-regular fa-heart text-xl"></i>
             <span className="text-sm font-light">{likes}</span>
           </button>
           <button className="flex items-center flex-col cursor-pointer">
-            <i class="fa-regular fa-comment text-xl"></i>
+            <i className="fa-regular fa-comment text-xl"></i>
             <span className="text-sm font-light">{comments}</span>
           </button>
         </div>
