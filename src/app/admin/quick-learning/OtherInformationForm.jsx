@@ -41,7 +41,7 @@ const OtherInformationForm = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="p-3 h-96 overflow-auto py-12">
+    <div className="p-3 h-96 overflow-auto overflow-y-auto py-12">
       <div className="flex flex-col gap-10">
         <div className="gap-2 grid grid-cols-12 items-center w-full">
           <label className="col-span-1 text-sm">Captions</label>

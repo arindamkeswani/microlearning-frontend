@@ -9,7 +9,7 @@ const UploadReelModal = ({ onClose }) => {
         <p className="text-base font-bold">Upload Video</p>
       </Modal.Header>
       <Modal.Body>
-        <div className="flex h-[35rem] overflow-auto">
+        <div className="flex h-[35rem] overflow-hidden">
           <ReelUploadSteps onClose={onClose} />
         </div>
       </Modal.Body>

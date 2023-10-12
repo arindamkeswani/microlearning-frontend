@@ -63,7 +63,7 @@ const AddTranscriptForm = () => {
   );
 
   return (
-    <div className="p-3 h-96 overflow-auto my-3">
+    <div className="p-3 h-96 overflow-auto overflow-y-auto my-3">
       <div className="flex flex-col gap-10">
         <div className="flex flex-col gap-5">
           <div className="flex gap-10 justify-center items-center">

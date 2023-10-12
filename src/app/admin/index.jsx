@@ -4,6 +4,7 @@ import { createRoutes } from "../../App";
 // import { routes } from "./routes";
 import { Routes } from "react-router-dom";
 import SideNavbar from "../shared/SideNavbar/SideNavbar";
+import { routes } from "./routes";
 
 const tabs = [
   {
@@ -48,7 +49,7 @@ const AdminHomeScreen = () => {
           }
         )}
       >
-        {/* <Routes>{createRoutes(routes)}</Routes> */}
+        <Routes>{createRoutes(routes)}</Routes>
       </div>
     </div>
   );
