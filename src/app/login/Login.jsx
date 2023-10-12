@@ -2,15 +2,23 @@ import React, { createRef, useEffect, useRef, useState } from "react";
 import { Carousel, TextInput } from "flowbite-react";
 import { debounce } from "../../utils";
 import Button from "../../lib/Button/Button";
+import { useLogin } from "../../api/useLogin";
+import { login } from "../../slices/userSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const inputRefs = [1, 2, 3, 4, 5, 6].map(() => createRef(null));
 
 const Login = () => {
+  const naviagte = useNavigate();
+  const dispatch = useDispatch();
+  const { loginFetcher } = useLogin();
   const [timer, setTimer] = useState(30);
   const [isValidNumber, setIsValidNumber] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isNumberSaved, setIsNumberSaved] = useState(false);
   const [optArray, setOtpArray] = useState(["", "", "", "", "", ""]);
+  const [isEdit, setIsEdit] = useState(false);
 
   const handleInputChange = (index, value) => {
     optArray[index] = value;
@@ -69,7 +77,7 @@ const Login = () => {
         className="flex flex-col w-1/2 justify-center items-center bg-[#fff]  "
         style={{ boxShadow: "0 0 10px #00000029" }}
       >
-        {!isNumberSaved ? (
+        {!isNumberSaved || isEdit ? (
           <div>
             <div className="mt-2 mb-4 text-center">
               <img
@@ -96,6 +104,7 @@ const Login = () => {
                 addon="+91"
                 id="tel"
                 placeholder="Enter Mobile No."
+                value={phoneNumber}
                 // className="focus:border-gray-50"
                 onChange={(e) => {
                   const phoneNumber = e.target.value;
@@ -105,7 +114,7 @@ const Login = () => {
                       phoneNumber.length === 10 && /^\d+$/.test(phoneNumber)
                     );
                   }, 300)();
-                  setPhoneNumber();
+                  setPhoneNumber(e.target.value);
                 }}
                 required
                 {...(isValidNumber
@@ -128,7 +137,10 @@ const Login = () => {
                 disabled={!isValidNumber || !phoneNumber}
                 className="rou rounded-[25px] p-[15px] w-[90%] m-auto mb-5 disabled:bg-[#B4B4B4] disabled:text-[#fff] border-0 bg-[#5a4bda] text-xl"
                 style={{ boxShadow: "0 7px 11px #5315cf38" }}
-                onClick={() => setIsNumberSaved(true)}
+                onClick={() => {
+                  setIsNumberSaved(true);
+                  setIsEdit(false);
+                }}
               >
                 GET OTP
               </Button>
@@ -142,17 +154,22 @@ const Login = () => {
                 className="w-[76px] h-[76px] border-1 rounded-[15px] m-auto "
               />
             </div>
-            <div class="flex flex-col items-center justify-center mt-5">
-              <h2 class="font-[700] text-[30px]">Verification</h2>
-              <h2 class="font-[500] text-[16px]">
+            <div className="flex flex-col items-center justify-center mt-5">
+              <h2 className="font-[700] text-[30px]">Verification</h2>
+              <h2 className="font-[500] text-[16px]">
                 Enter the code sent to your phone
               </h2>
-              <div class="flex items-start">
-                <h4 class="font-[700] text-[20px]">(+91) {phoneNumber}</h4>
+              <div className="flex items-start">
+                <h4 className="font-[700] text-[20px]">(+91) {phoneNumber}</h4>
                 <img
                   id="edit-phone"
                   className="edit-img ml-4 cursor-pointer w-[25px] h-fit "
                   src="/edit.png"
+                  onClick={() => {
+                    setIsEdit(true);
+                    setIsNumberSaved(false);
+                    setTimer(30);
+                  }}
                 ></img>
               </div>
             </div>
@@ -183,6 +200,23 @@ const Login = () => {
                 disabled={optArray.join("").length !== 6}
                 className="rou rounded-[25px] p-[12px] w-[100%] m-auto mb-5 disabled:bg-[#B4B4B4] disabled:text-[#fff] border-0 bg-[#5a4bda] text-xl"
                 style={{ boxShadow: "0 7px 11px #5315cf38" }}
+                onClick={() => {
+                  loginFetcher(
+                    { payload: { contact: phoneNumber } },
+                    {
+                      onSuccess: (res) => {
+                        const userData = res?.data?.data;
+                        dispatch(login(userData));
+
+                        naviagte(
+                          userData?.role === "student"
+                            ? "/student/quick-learning"
+                            : "/admin/quick-learning"
+                        );
+                      },
+                    }
+                  );
+                }}
               >
                 CONTINUE
               </Button>

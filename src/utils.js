@@ -11,3 +11,16 @@ export const debounce = (func, delay) => {
     }, delay);
   };
 };
+
+export function isValidJSON(jsonString) {
+  try {
+    JSON.parse(jsonString);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+export const capitalizeFirstLetter = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};

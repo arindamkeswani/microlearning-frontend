@@ -16,9 +16,11 @@ export const routes = [
   {
     path: "/students/*",
     component: StudentHomeScreen,
+    auth: true,
   },
   {
     path: "/admin/*",
+    auth: true,
     component: AdminHomeScreen,
   },
 ];
