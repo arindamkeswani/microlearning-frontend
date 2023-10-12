@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import cn from "clsx";
 import { createRoutes } from "../../App";
-// import { routes } from "./routes";
+import { routes } from "./routes";
 import { Routes } from "react-router-dom";
 import SideNavbar from "../shared/SideNavbar/SideNavbar";
+// import { routes } from "../../routes";
 
 const tabs = [
   {
@@ -29,6 +30,7 @@ const tabs = [
 ];
 
 const StudentHomeScreen = () => {
+  console.log("student");
   const [isCollapse, setIsCollapse] = useState(false);
   return (
     <div className={cn("w-full gap-4 h-[calc(100vh-75px)] relative")}>
@@ -48,7 +50,7 @@ const StudentHomeScreen = () => {
           }
         )}
       >
-        {/* <Routes>{createRoutes(routes)}</Routes> */}
+        <Routes>{createRoutes(routes)}</Routes>
       </div>
     </div>
   );
