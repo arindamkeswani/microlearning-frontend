@@ -46,7 +46,6 @@ const AddItemModal = ({ onClose, metaData }) => {
 
   const queryClient = useQueryClient();
 
-  console.log(selectedFile);
   const handleSubmit = async () => {
     const key = `content/${uuid()}/${selectedFile.name}`;
 

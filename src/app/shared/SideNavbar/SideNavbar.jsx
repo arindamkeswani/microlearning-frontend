@@ -27,7 +27,7 @@ const SideNavbar = ({ isCollapse, setIsCollapse, tabs = [] }) => {
         setActiveTab(i);
       }
     }
-  }, [getUrlKey, setActiveTab, tabs]);
+  }, [getUrlKey, setActiveTab, tabs, location]);
 
   return (
     <div

@@ -71,8 +71,6 @@ const VideoList = () => {
     return mergedArray;
   }, [data, productData]);
 
-  console.log("mergedData", mergedData);
-
   const [forceRender, setForceRender] = useState(true);
 
   useEffect(() => {}, [forceRender]);
