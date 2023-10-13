@@ -15,7 +15,7 @@ const Header = () => {
           <div className="flex gap-2 sm:gap-4 items-center cursor-pointer">
             <img
               className="h-full w-[2.5rem] object-cover"
-              src="/Images/Logo_1.jpg"
+              src="/pw_logo.jpeg"
               alt=""
             />
             <h3 className="text-sm sm:text-base whitespace-nowrap">
