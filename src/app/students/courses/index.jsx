@@ -13,7 +13,7 @@ const CoursesScreen = () => {
     params: {
       type: "batch",
       page: 1,
-      limit: 20,
+      limit: 50,
       userId: user[0]._id,
     },
     route: "/items/recommended",
@@ -25,7 +25,7 @@ const CoursesScreen = () => {
     params: {
       type: "batch",
       page: 1,
-      limit: 20,
+      limit: 50,
       userId: user[0]._id,
     },
     route: "/items",

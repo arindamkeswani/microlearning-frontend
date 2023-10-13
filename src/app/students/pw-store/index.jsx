@@ -14,7 +14,7 @@ const PWStoreScreen = () => {
     params: {
       type: "store",
       page: 1,
-      limit: 20,
+      limit: 50,
       userId: user[0]._id,
     },
     route: "/items/recommended",
@@ -26,7 +26,7 @@ const PWStoreScreen = () => {
     params: {
       type: "store",
       page: 1,
-      limit: 20,
+      limit: 50,
       userId: user[0]._id,
     },
     route: "/items",

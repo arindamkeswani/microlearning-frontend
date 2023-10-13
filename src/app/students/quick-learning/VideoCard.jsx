@@ -168,22 +168,24 @@ const VideoCard = ({
   return (
     <div
       name="scroll-to-element"
-      className="scroll-to-element w-[26rem] mx-auto bg-white mb-2 relative h-[75vh] flex z-10 "
+      className="scroll-to-element w-[26rem] mx-auto bg-white mb-2 relative h-[75vh] flex z-10"
       ref={containerRef}
     >
-      <div className="absolute z-10 left-0 top-0 h-12 w-12">
-        <div
-          className={twMerge(
-            cn(
-              "absolute transform rounded -rotate-45 bg-purple-500 text-center text-white font-semibold left-[-34px] top-[32px] w-[170px]",
-              {
-                "bg-green-500": interestLevel === "MEDIUM",
-                "bg-yellow-400": interestLevel === "LOW",
-              }
-            )
-          )}
-        >
-          {interestLevel}
+      <div className="relative w-full overflow-hidden">
+        <div className="absolute z-10 left-0 top-0 h-12 w-12">
+          <div
+            className={twMerge(
+              cn(
+                "absolute transform rounded -rotate-45 bg-purple-500 text-center text-white font-semibold left-[-34px] top-[32px] w-[170px]",
+                {
+                  "bg-green-500": interestLevel === "MEDIUM",
+                  "bg-yellow-400": interestLevel === "LOW",
+                }
+              )
+            )}
+          >
+            {interestLevel}
+          </div>
         </div>
       </div>
       <div className="z-10 absolute bg-[rgba(0,0,0,0.4)] w-[80%] bottom-[1rem] flex flex-col gap-2 py-2 px-4">
