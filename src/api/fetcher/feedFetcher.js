@@ -12,3 +12,11 @@ export const getFeed = async (params) => {
     // totalPages: limit !== "none" ? Math.ceil(totalCount / limit) : 1,
   };
 };
+export const recordActivity = async ({ payload, route }) => {
+  const {
+    data: { data },
+  } = await Client.post(route, payload);
+  return {
+    data: data,
+  };
+};

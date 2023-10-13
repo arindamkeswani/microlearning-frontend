@@ -1,14 +1,15 @@
 import { Badge } from "flowbite-react";
 import React from "react";
+import { CLOUDFRONT_BASE_URL } from "../../../axios";
 
 const Card = ({ data }) => {
-  const { name, description, urls, price, discount, tags, rating } = data;
+  const { name, urls, price, discount, tags, rating } = data;
 
   return (
     <div className="w-[16rem] rounded-lg overflow-hidden relative h-[26rem] border mb-4">
       <div className="w-full h-[15rem]">
         <img
-          src={urls[0]}
+          src={`${CLOUDFRONT_BASE_URL + "/" + urls[0]}`}
           className="w-full h-full contain"
           alt="thumbnail"
           loading="lazy"
@@ -21,12 +22,6 @@ const Card = ({ data }) => {
             <Badge color="purple" key={data._id}>
               {data.name}
             </Badge>
-            // <span
-            //   key={data._id}
-            //   className={`inline-block bg-[#5664ff] text-white text-xs px-2 py-[2px] rounded`}
-            // >
-            //   {data.name}
-            // </span>
           ))}
         </div>
         <div className="flex justify-between absolute bottom-0 w-[93%]">
