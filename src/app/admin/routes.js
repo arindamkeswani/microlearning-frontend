@@ -2,6 +2,7 @@ import CoursesScreen from "./courses";
 import PwStoreScreen from "./pw-store";
 import DashboardScreen from "./dashboard";
 import QuickLearningScreen from "./quick-learning";
+import LeaderboardScreen from "../students/leaderboard";
 
 export const routes = [
   {
@@ -15,7 +16,13 @@ export const routes = [
   {
     path: "/pw-store",
     component: PwStoreScreen,
+  },
+  {
     path: "/dashboard",
     component: DashboardScreen,
+  },
+  {
+    path: "/leaderboard",
+    component: LeaderboardScreen,
   },
 ];

@@ -168,16 +168,22 @@ const VideoCard = ({
   return (
     <div
       name="scroll-to-element"
-      className="scroll-to-element w-[26rem] mx-auto bg-white mb-2 relative h-[75vh] flex z-1 "
+      className="scroll-to-element w-[26rem] mx-auto bg-white mb-2 relative h-[75vh] flex z-10 "
       ref={containerRef}
     >
-      <div className="absolute top-5 right-[20%] z-20">
-        {/* <Badge color="green">{interestLevel}</Badge> */}
-        <div class="relative">
-          <div class="w-0 h-0 border-t-8 border-r-8 border-transparent absolute top-0 left-0"></div>
-          <div class="bg-green-500 text-white  px-3 rounded-l-full rounded-r-sm relative z-10">
-            {interestLevel}
-          </div>
+      <div className="absolute z-10 left-0 top-0 h-12 w-12">
+        <div
+          className={twMerge(
+            cn(
+              "absolute transform rounded -rotate-45 bg-purple-500 text-center text-white font-semibold left-[-34px] top-[32px] w-[170px]",
+              {
+                "bg-green-500": interestLevel === "MEDIUM",
+                "bg-yellow-400": interestLevel === "LOW",
+              }
+            )
+          )}
+        >
+          {interestLevel}
         </div>
       </div>
       <div className="z-10 absolute bg-[rgba(0,0,0,0.4)] w-[80%] bottom-[1rem] flex flex-col gap-2 py-2 px-4">
@@ -243,7 +249,7 @@ const VideoCard = ({
           />
         )}
       </div>
-      <div className="absolute top-2 left-2 flex items-center space-x-2">
+      <div className="absolute top-2 z-10 left-2 flex items-center space-x-2">
         <button className="bg-gray-600 rounded-full" onClick={toggleMute}>
           {isMuted ? (
             <i className="fa-solid fa-volume-xmark text-xs text-white p-1"></i>

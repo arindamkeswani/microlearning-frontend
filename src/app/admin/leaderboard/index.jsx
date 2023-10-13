@@ -1,17 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useGetLeaderBoard } from "../../../api/hooks/useGetLeaderBoard";
 import Loader from "../../../lib/Loader/Loader";
-
-const LeaderboardScreen = ({}) => {
-  const { user } = useSelector((store) => store.user) || {};
+const LeaderboardScreen = () => {
   const {
     data: { data },
     isLoading,
   } = useGetLeaderBoard({
     params: {
-      type: "student",
-      userId: user[0]._id,
+      type: "admin",
     },
   });
   return (
