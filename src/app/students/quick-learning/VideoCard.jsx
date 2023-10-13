@@ -144,10 +144,9 @@ const VideoCard = ({
               !video?.ended &&
               video?.readyState > video?.HAVE_CURRENT_DATA
             ) && videoRef?.current?.play();
-            setIsMuted(!isMuted);
-          } catch (error) {
-            console.log("erro is", error);
-          }
+
+            // setIsMuted(!isMuted);
+          } catch (error) {}
         }, 800)();
       } else {
         videoRef?.current?.pause();

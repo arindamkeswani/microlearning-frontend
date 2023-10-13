@@ -23,7 +23,7 @@ const VideoList = () => {
     params: {
       user: user[0]._id,
       page: 1,
-      limit: 20,
+      limit: 25,
     },
   });
 
