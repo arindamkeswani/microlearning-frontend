@@ -22,5 +22,7 @@ body {
 }
 
 .wizard-tab-content {
-  min-height: 18rem !important;
+  min-height: 27rem !important;
+  padding: 5px !important;
+  padding-top: 10px !important;
 }

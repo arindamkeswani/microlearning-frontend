@@ -16,7 +16,7 @@ const PreviewForm = () => {
   );
 
   return (
-    <div className="p-3 h-96 overflow-auto my-3">
+    <div className="p-3 h-96 overflow-auto overflow-y-auto my-3">
       <div className="flex flex-col p-2 gap-5">
         <div className="flex w-full gap-6">
           <div className="relative cursor-pointer w-[180px]">
