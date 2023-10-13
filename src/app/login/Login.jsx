@@ -205,12 +205,11 @@ const Login = () => {
                     { payload: { contact: phoneNumber } },
                     {
                       onSuccess: (res) => {
-                        const userData = res?.data?.data;
-                        dispatch(login(userData));
+                        const userData = res?.data?.data?.[0];
+                        dispatch(login([userData]));
 
-                        console.log("userData:", userData);
                         naviagte(
-                          userData?.[0]?.role === "student"
+                          userData?.role === "student"
                             ? "/students/quick-learning"
                             : "/admin/quick-learning"
                         );
