@@ -133,19 +133,23 @@ const VideoCard = ({
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         debounce(() => {
-          listRef?.scrollTo({
-            top: containerRef?.current?.offsetTop - 10,
-            behavior: "smooth",
-          });
-          const video = videoRef.current;
-          !(
-            video?.currentTime > 0 &&
-            !video?.paused &&
-            !video?.ended &&
-            video?.readyState > video?.HAVE_CURRENT_DATA
-          ) && videoRef?.current?.play();
-          setIsMuted(!isMuted);
-        }, 500)();
+          try {
+            listRef?.scrollTo({
+              top: containerRef?.current?.offsetTop - 10,
+              behavior: "smooth",
+            });
+            const video = videoRef.current;
+            !(
+              video?.currentTime > 0 &&
+              !video?.paused &&
+              !video?.ended &&
+              video?.readyState > video?.HAVE_CURRENT_DATA
+            ) && videoRef?.current?.play();
+            setIsMuted(!isMuted);
+          } catch (error) {
+            console.log("erro is", error);
+          }
+        }, 800)();
       } else {
         videoRef?.current?.pause();
         setShowQuiz(false);
