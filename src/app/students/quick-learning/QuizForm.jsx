@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { twMerge } from "tailwind-merge";
+import cn from "clsx";
 
 const QuizForm = ({
   question,
@@ -6,6 +8,7 @@ const QuizForm = ({
   correctAnswer,
   onAnswerSelected,
   onClose,
+  alreadyAnswered = false,
 }) => {
   console.log(correctAnswer);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -32,7 +35,15 @@ const QuizForm = ({
           <i className="fa-solid fa-xmark"></i>
         </button>
         <div className="flex flex-col h-full justify-around ">
-          <h2 className="text-base font-bold mb-4 text-white">{question}</h2>
+          <h2 className="text-base font-bold mb-4 text-white z-20">
+            {question}
+          </h2>
+          {alreadyAnswered && (
+            <h4 className="text-white text-center bg-[#75c376b0] py-1 rounded ">
+              Already answered
+            </h4>
+          )}
+
           <ul className="">
             {options.map((option, index) => {
               const isCorrect = option === correctAnswer;
@@ -45,11 +56,19 @@ const QuizForm = ({
                 ? isCorrect
                   ? "bg-green-500 text-white"
                   : "bg-red-500 text-white"
-                : "bg-[#605f5fb0]";
+                : "bg-[#605f5fdc]";
               return (
                 <li
                   key={index}
-                  className={`cursor-pointer my-1.5 p-2 text-white font-semibold  rounded text-sm ${optionClass}`}
+                  className={twMerge(
+                    cn(
+                      `cursor-pointer my-1.5 p-2  text-white font-semibold z-20 relative  rounded text-sm ${optionClass}`,
+                      {
+                        "cursor-not-allowed pointer-events-none":
+                          alreadyAnswered,
+                      }
+                    )
+                  )}
                   onClick={() => handleAnswerSelected(option, index)}
                 >
                   {isSelected && isCorrect && "✔ "}

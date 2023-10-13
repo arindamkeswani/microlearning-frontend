@@ -233,30 +233,8 @@ const VideoList = () => {
       limit: 20,
     },
   });
-  // let currentScrollPosition = window && window.scrollY;
   const [forceRender, setForceRender] = useState(true);
-  let currentScrollPosition = window && window.scrollY;
-  // useEffect(() => {
-  //   const handleScroll = (event) => {
-  //     const currentPosition = window.scrollY;
-  //     const targetPosition = currentPosition + (event.deltaY < 0 ? -400 : 400); // Adjust the scroll distance as needed
-  //     scroller.scrollTo("scroll-to-element", {
-  //       duration: 1000, // Scroll duration in milliseconds
-  //       smooth: "easeInOutQuart", // Easing function for smooth scroll
-  //       offset: targetPosition, // Offset to the targt position
-  //     });
-  //     clearTimeout(listenScroll);
-  //     listenScroll = setTimeout(() => {
-  //       currentScrollPosition = window && window.scrollY;
-  //     }, 500);
-  //   };
 
-  //   window.addEventListener("wheel", handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener("wheel", handleScroll);
-  //   };
-  // }, []);
   useEffect(() => {}, [forceRender]);
 
   const listRef = useRef(null);
@@ -280,14 +258,16 @@ const VideoList = () => {
               username={video?.uploadedBy?.username || "Yash"}
               likes={"100k"}
               comments={"50k"}
-              caption={video.caption || "what the fuck"}
-              language={video.language}
-              question={video.question}
-              options={video.options}
-              correctOption={video.correctOptionIdx}
-              transcript={video.transcript}
+              tags={video?.tags}
+              caption={video?.caption}
+              language={video?.language}
+              question={video?.question}
+              options={video?.options}
+              correctOption={video?.correctOptionIdx}
+              transcript={video?.transcript}
               listRef={listRef?.current}
               setForceRender={setForceRender}
+              interestLevel={video?.interestLevel}
             />
           </div>
         ))}

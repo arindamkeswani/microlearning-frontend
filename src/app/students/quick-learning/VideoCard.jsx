@@ -6,6 +6,7 @@ import QuizForm from "./QuizForm";
 import { debounce } from "../../../utils";
 import { useRecordActivity } from "../../../api/hooks/useRecordActivity";
 import { useSelector } from "react-redux";
+import { Badge } from "flowbite-react";
 
 const VideoCard = ({
   videoUrl,
@@ -22,6 +23,8 @@ const VideoCard = ({
   transcript,
   listRef,
   setForceRender,
+  tags,
+  interestLevel,
 }) => {
   const { user } = useSelector((store) => store.user) || {};
   const { recordActivityFetcher } = useRecordActivity();
@@ -45,8 +48,7 @@ const VideoCard = ({
   };
   const [showQuiz, setShowQuiz] = useState(false);
   const [showTransScript, setShowTransScript] = useState(false);
-  const [totalDuration, setTotalDuration] = useState(0);
-  const [watchedDuration, setWatchedDuration] = useState(0);
+  const [alreadyAns, setAlreadyAns] = useState(false);
 
   const handleVideoEnd = () => {
     console.log("hello");
@@ -54,7 +56,6 @@ const VideoCard = ({
   };
 
   const handleAnswerSelected = async (isCorrect) => {
-    console.log(isCorrect);
     const payload = {
       contentId: videoId,
       user: user[0]._id,
@@ -74,6 +75,20 @@ const VideoCard = ({
             },
             {
               onSuccess: () => {
+                setTimeout(() => {
+                  const boundingClientRect =
+                    containerRef?.current?.getBoundingClientRect();
+                  listRef.scrollTo({
+                    top:
+                      containerRef?.current?.offsetTop +
+                      boundingClientRect?.height,
+                    behavior: "smooth",
+                  });
+                  setShowQuiz(false);
+                }, 1000);
+              },
+              onError: (res) => {
+                setAlreadyAns(true);
                 setTimeout(() => {
                   const boundingClientRect =
                     containerRef?.current?.getBoundingClientRect();
@@ -129,6 +144,7 @@ const VideoCard = ({
             !video?.ended &&
             video?.readyState > video?.HAVE_CURRENT_DATA
           ) && videoRef?.current?.play();
+          setIsMuted(!isMuted);
         }, 500)();
       } else {
         videoRef?.current?.pause();
@@ -137,8 +153,6 @@ const VideoCard = ({
     });
   };
   const recordAfterScroll = (totalDuration, watchedTime) => {
-    console.log(totalDuration);
-    console.log(watchedTime);
     const attention = (watchedTime / totalDuration) * 100;
 
     const payload = {
@@ -154,22 +168,44 @@ const VideoCard = ({
   return (
     <div
       name="scroll-to-element"
-      className="scroll-to-element w-[26rem] mx-auto bg-white mb-2 relative h-[75vh] flex z-1 "
+      className="scroll-to-element w-[26rem] mx-auto bg-white mb-2 relative h-[75vh] flex z-10 "
       ref={containerRef}
     >
-      <div className="z-10 absolute bottom-[1rem] flex flex-col w-full gap-2 px-4">
+      <div className="absolute z-10 left-0 top-0 h-12 w-12">
+        <div
+          className={twMerge(
+            cn(
+              "absolute transform rounded -rotate-45 bg-purple-500 text-center text-white font-semibold left-[-34px] top-[32px] w-[170px]",
+              {
+                "bg-green-500": interestLevel === "MEDIUM",
+                "bg-yellow-400": interestLevel === "LOW",
+              }
+            )
+          )}
+        >
+          {interestLevel}
+        </div>
+      </div>
+      <div className="z-10 absolute bg-[rgba(0,0,0,0.4)] w-[80%] bottom-[1rem] flex flex-col gap-2 py-2 px-4">
         <div className="flex gap-3 items-center">
           <img src={avatarUrl} alt="Avatar" className="h-8 w-8 rounded-full" />
-          <span className="font-light text-base text-white">{username}</span>
+          <span className="text-base font-semibold text-white">{username}</span>
         </div>
-        <p className="text-white w-[80%] text-xs">{caption}</p>
+        <p className="text-white w-full text-xs">{caption}</p>
+        <div className="flex flex-wrap gap-1">
+          {tags.map((data) => (
+            <Badge color="purple" key={data._id}>
+              {data.name}
+            </Badge>
+          ))}
+        </div>
       </div>
       <div className="absolute top-0 left-0 w-[80%]  h-full">
         <video
-          muted
-          controls
+          muted={true}
           ref={videoRef}
           onEnded={handleVideoEnd}
+          controls
           onPause={() => {
             if (videoRef.current) {
               recordAfterScroll(
@@ -197,6 +233,7 @@ const VideoCard = ({
                 : options?.hi[correctOption.hi]
             }
             onAnswerSelected={handleAnswerSelected}
+            alreadyAnswered={alreadyAns}
             onClose={() => {
               const boundingClientRect =
                 containerRef?.current?.getBoundingClientRect();
@@ -212,7 +249,7 @@ const VideoCard = ({
           />
         )}
       </div>
-      <div className="absolute top-2 left-2 flex items-center space-x-2">
+      <div className="absolute top-2 z-10 left-2 flex items-center space-x-2">
         <button className="bg-gray-600 rounded-full" onClick={toggleMute}>
           {isMuted ? (
             <i className="fa-solid fa-volume-xmark text-xs text-white p-1"></i>
@@ -252,7 +289,7 @@ const VideoCard = ({
               <button
                 className={`py-2 px-4 rounded-t-lg border-b-2 ${
                   activeTab === "english"
-                    ? "border-blue-500"
+                    ? "border-[#5A4BDA]"
                     : "border-transparent"
                 }`}
                 onClick={() => handleTabChange("english")}
@@ -262,7 +299,7 @@ const VideoCard = ({
               <button
                 className={`py-2 px-4 rounded-t-lg border-b-2 ${
                   activeTab === "hindi"
-                    ? "border-blue-500"
+                    ? "border-[#5A4BDA]"
                     : "border-transparent"
                 }`}
                 onClick={() => handleTabChange("hindi")}
