@@ -53,7 +53,6 @@ const VideoCard = ({
   const [alreadyAns, setAlreadyAns] = useState(false);
 
   const handleVideoEnd = () => {
-    console.log("hello");
     setShowQuiz(true);
   };
 

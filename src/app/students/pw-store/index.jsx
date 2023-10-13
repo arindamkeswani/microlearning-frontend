@@ -41,7 +41,9 @@ const PWStoreScreen = () => {
           {isLoading ? (
             <Loader />
           ) : data && data?.length > 0 ? (
-            data?.map((data) => <Card data={data} key={data._id} />)
+            (data || [])
+              ?.filter((data) => !!data.interest)
+              ?.map((data) => <Card data={data} key={data._id} />)
           ) : (
             <NoDataFound />
           )}

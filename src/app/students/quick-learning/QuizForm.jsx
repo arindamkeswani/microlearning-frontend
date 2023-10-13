@@ -10,7 +10,6 @@ const QuizForm = ({
   onClose,
   alreadyAnswered = false,
 }) => {
-  console.log(correctAnswer);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);

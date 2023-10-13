@@ -23,7 +23,7 @@ const VideoList = () => {
     params: {
       user: user[0]._id,
       page: 1,
-      limit: 20,
+      limit: 25,
     },
   });
 
@@ -70,8 +70,6 @@ const VideoList = () => {
 
     return mergedArray;
   }, [data, productData]);
-
-  console.log("mergedData", mergedData);
 
   const [forceRender, setForceRender] = useState(true);
 
