@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useGetStudentsInsights } from "../../../api/hooks/useGetStudentsInsights";
 import TableComponent from "../../../lib/Table/Table";
 import DetailsModal from "./DetailsModal";
+import TabNavigator from "../../../lib/TabNavigator";
+import TopicInsights from "./TopicInsights";
 
 const DashboardScreen = () => {
   const { data, isLoading } = useGetStudentsInsights({ params: {} });
@@ -41,16 +43,38 @@ const DashboardScreen = () => {
       },
     },
   ];
+
+  const tabs = [
+    {
+      name: "Student Insights",
+      component: (
+        <>
+          <TableComponent columns={columns} data={data} isLoading={isLoading} />{" "}
+          {showDetails && (
+            <DetailsModal
+              onClose={() => setShowDetails(null)}
+              contentMetaData={showDetails}
+            />
+          )}
+        </>
+      ),
+    },
+    {
+      name: "Topic Insights",
+      component: <TopicInsights />,
+    },
+  ];
   return (
     <div className="mt-5">
       {" "}
-      <TableComponent columns={columns} data={data} />{" "}
+      <TabNavigator tabs={tabs} />
+      {/* <TableComponent columns={columns} data={data} />{" "}
       {showDetails && (
         <DetailsModal
           onClose={() => setShowDetails(null)}
           contentMetaData={showDetails}
         />
-      )}
+      )} */}
     </div>
   );
 };
