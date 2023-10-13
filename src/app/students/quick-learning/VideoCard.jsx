@@ -39,12 +39,14 @@ const VideoCard = ({
   };
   const replayVideo = () => {
     const video = videoRef?.current;
-    !(
-      video?.currentTime > 0 &&
-      !video?.paused &&
-      !video?.ended &&
-      video?.readyState > video?.HAVE_CURRENT_DATA
-    ) && video?.play();
+    setTimeout(function () {
+      !(
+        video?.currentTime > 0 &&
+        !video?.paused &&
+        !video?.ended &&
+        video?.readyState > video?.HAVE_CURRENT_DATA
+      ) && video?.play();
+    }, 150);
   };
   const [showQuiz, setShowQuiz] = useState(false);
   const [showTransScript, setShowTransScript] = useState(false);
@@ -139,12 +141,15 @@ const VideoCard = ({
               behavior: "smooth",
             });
             const video = videoRef.current;
-            !(
-              video?.currentTime > 0 &&
-              !video?.paused &&
-              !video?.ended &&
-              video?.readyState > video?.HAVE_CURRENT_DATA
-            ) && videoRef?.current?.play();
+            setTimeout(function () {
+              !(
+                video?.currentTime > 0 &&
+                !video?.paused &&
+                !video?.ended &&
+                video?.readyState > video?.HAVE_CURRENT_DATA
+              ) && videoRef?.current?.play();
+            }, 150);
+
             setIsMuted(!isMuted);
           } catch (error) {
             console.log("erro is", error);
