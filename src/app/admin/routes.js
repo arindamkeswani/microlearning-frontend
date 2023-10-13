@@ -15,6 +15,8 @@ export const routes = [
   {
     path: "/pw-store",
     component: PwStoreScreen,
+  },
+  {
     path: "/dashboard",
     component: DashboardScreen,
   },
