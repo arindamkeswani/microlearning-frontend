@@ -16,6 +16,7 @@ const PwStoreScreen = () => {
       page: 1,
       limit: 20,
     },
+    route: "/items",
   });
 
   return (
