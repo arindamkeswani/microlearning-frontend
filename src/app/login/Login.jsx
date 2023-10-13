@@ -208,9 +208,10 @@ const Login = () => {
                         const userData = res?.data?.data;
                         dispatch(login(userData));
 
+                        console.log("userData:", userData);
                         naviagte(
-                          userData?.role === "student"
-                            ? "/student/quick-learning"
+                          userData?.[0]?.role === "student"
+                            ? "/students/quick-learning"
                             : "/admin/quick-learning"
                         );
                       },

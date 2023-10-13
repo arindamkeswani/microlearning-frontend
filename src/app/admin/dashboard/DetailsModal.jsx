@@ -5,14 +5,14 @@ import TableComponent from "../../../lib/Table/Table";
 const DetailsModal = ({ onClose, contentMetaData, refetchContentList }) => {
   const detailsData = useMemo(() => {
     function mergeData(tag) {
-      const interest = contentMetaData.interests.find(
-        (i) => i.tag._id === tag._id
+      const interest = contentMetaData?.interests?.find(
+        (i) => i?.tag?._id === tag?._id
       ) || { attention: null };
-      const strength = contentMetaData.strengths.find(
-        (s) => s.tag._id === tag._id
+      const strength = contentMetaData?.strengths?.find(
+        (s) => s?.tag?._id === tag?._id
       ) || { correct: null, incorrect: null };
-      const weakness = contentMetaData.weaknesses.find(
-        (w) => w.tag._id === tag._id
+      const weakness = contentMetaData?.weaknesses?.find(
+        (w) => w?.tag?._id === tag?._id
       ) || { correct: null, incorrect: null };
 
       return {
@@ -32,13 +32,15 @@ const DetailsModal = ({ onClose, contentMetaData, refetchContentList }) => {
       contentMetaData.weaknesses,
     ]
       .flat()
-      .forEach(({ tag }) => {
-        tagMap.set(tag._id, tag);
+      .forEach((r) => {
+        tagMap.set(r?.tag?._id, r?.tag);
       });
 
     // Create the final result array
-    return Array.from(tagMap.values()).map((tag) => mergeData(tag));
+    return Array.from(tagMap?.values()).map((tag) => mergeData(tag));
   }, [contentMetaData]);
+
+  const filteredDetailsData = (detailsData || []).filter((data) => !!data?.tag);
 
   const columns = [
     {
@@ -105,7 +107,7 @@ const DetailsModal = ({ onClose, contentMetaData, refetchContentList }) => {
     >
       <Modal.Header>Add Content</Modal.Header>
       <Modal.Body className="p-4 max-h-[65vh]">
-        <TableComponent columns={columns} data={detailsData} />{" "}
+        <TableComponent columns={columns} data={filteredDetailsData} />{" "}
       </Modal.Body>
     </Modal>
   );

@@ -12,3 +12,16 @@ export const getStudentsInsights = async (params) => {
     // totalPages: limit !== "none" ? Math.ceil(totalCount / limit) : 1,
   };
 };
+
+export const getTopicsInsights = async (params) => {
+  const {
+    data: { data },
+  } = await Client.get("/dashboards/topic-insights", {
+    params: { page: 1, limit: "none" },
+  });
+  return {
+    data: data,
+    params: params.page,
+    // totalPages: limit !== "none" ? Math.ceil(totalCount / limit) : 1,
+  };
+};
