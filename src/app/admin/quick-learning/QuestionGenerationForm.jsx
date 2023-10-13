@@ -3,12 +3,13 @@ import { options } from "./AddTranscriptForm";
 import { getGeneratedQuestion } from "../../../api/reel-fetchers";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "react-query";
-import { TextInput, Textarea } from "flowbite-react";
+import { TextInput, Textarea, ToggleSwitch } from "flowbite-react";
 import Button from "../../../lib/Button/Button";
 import { updateState } from "../../../slices/uploadReelsSlice";
 import useIsClient from "../../../api/hooks/useClient";
 import { toast } from "react-toastify";
 import Select from "../../../lib/Select/Select";
+import { twMerge } from "tailwind-merge";
 
 export const questionOptions = [
   { label: "A", value: "0" },
@@ -25,6 +26,8 @@ const QuestionGenerationForm = () => {
   );
 
   const [isGenerateQuestion, setIsGenerateQuestion] = useState(false);
+
+  const [isShowRawText, setIsShowRawText] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -55,6 +58,7 @@ const QuestionGenerationForm = () => {
               ...(state.options || {}),
               [selectedLanguage.value]: data[`options`][selectedLanguage.value],
             },
+            rawContent: data.rawContent,
           })
         );
         setIsGenerateQuestion(false);
@@ -67,7 +71,7 @@ const QuestionGenerationForm = () => {
   );
 
   return (
-    <div className="p-3 h-96 overflow-auto overflow-y-auto my-3">
+    <div className="p-3 h-[30rem] overflow-y-auto mt-6">
       <div className="flex flex-col gap-4">
         <div className="flex gap-10 justify-center items-center">
           <div className="flex gap-6 items-center">
@@ -178,6 +182,40 @@ const QuestionGenerationForm = () => {
                   }
                 : { placeholder: "Select" })}
             />
+          </div>
+
+          <div className="flex flex-col gap-4 mt-4">
+            <div className="flex items-center gap-3">
+              <ToggleSwitch
+                checked={isShowRawText}
+                onChange={setIsShowRawText}
+              />
+              <label className="text-sm ">View Raw AI-Generated Content</label>
+            </div>
+
+            {/* {isShowRawText && ( */}
+            <Textarea
+              className={twMerge(
+                "focus:ring-primary rounded disabled:cursor-default invisible",
+                isShowRawText && "visible"
+              )}
+              rows={5}
+              disabled
+              value={state.rawContent || ""}
+              // onChange={(e) => {
+              //   dispatch(
+              //     updateState({
+              //       ...state,
+              //       question: {
+              //         ...(state.question || {}),
+              //         [state?.language?.value]: e.target.value,
+              //       },
+              //     })
+              //   );
+              // }}
+              // placeholder="Type question"
+            />
+            {/* )} */}
           </div>
         </div>
       </div>

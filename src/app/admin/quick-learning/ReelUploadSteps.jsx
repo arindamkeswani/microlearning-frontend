@@ -12,9 +12,9 @@ import { useMutation } from "react-query";
 import { publishContent } from "../../../api/reel-fetchers";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { updateState } from "../../../slices/uploadReelsSlice";
+import { removeState, updateState } from "../../../slices/uploadReelsSlice";
 
-const ReelUploadSteps = ({ onClose }) => {
+const ReelUploadSteps = () => {
   const state = useSelector((state) => state.uploadReel);
   const steps = [
     {
@@ -53,11 +53,8 @@ const ReelUploadSteps = ({ onClose }) => {
     mutate: publishMutate,
   } = useMutation(["publish-content"], publishContent, {
     onSuccess: () => {
-      dispatch(updateState({}));
+      dispatch(removeState());
       toast.success("Content published");
-    },
-    onSettled: () => {
-      onClose();
     },
     onError: (res) => {
       toast.error("Unable to publish content");
@@ -65,6 +62,12 @@ const ReelUploadSteps = ({ onClose }) => {
   });
 
   const handlePublishContent = () => {
+    dispatch(
+      updateState({
+        ...state,
+        published: state._id,
+      })
+    );
     const {
       _id: id,
       tags,
@@ -90,7 +93,7 @@ const ReelUploadSteps = ({ onClose }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <FormWizard
         stepSize="xs"
         color="#5d51d3"
@@ -115,18 +118,11 @@ const ReelUploadSteps = ({ onClose }) => {
         onComplete={handlePublishContent}
       >
         {steps.map(({ title, render: Render, icon }, i) => (
-          <FormWizard.TabContent
-            title={title}
-            icon={icon}
-            // className="min-h-[35rem]"
-          >
+          <FormWizard.TabContent title={title} icon={icon}>
             <Render isTabsChanged={isTabsChanged} />
           </FormWizard.TabContent>
         ))}
       </FormWizard>
-
-      {/* Skip and next button */}
-      <div></div>
     </div>
   );
 };

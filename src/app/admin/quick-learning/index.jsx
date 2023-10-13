@@ -1,29 +1,15 @@
 import React, { useState } from "react";
-import Table from "../../../lib/Table/Table";
-import UploadReelModal from "./UploadReelModal";
+import ReelUploadSteps from "./ReelUploadSteps";
+import Button from "../../../lib/Button/Button";
+import { useSelector } from "react-redux";
 
 const QuickLearningScreen = () => {
-  const [showUploadReelModal, setShowUploadReelModal] = useState(false);
+  const state = useSelector((state) => state.uploadReel);
   return (
     <div className="h-full p-3">
-      <div className="flex flex-col gap-4 p-5">
-        <button
-          className="flex justify-end text-xl"
-          onClick={() => setShowUploadReelModal(true)}
-        >
-          <i className="fa-solid fa-square-plus"></i>
-        </button>
-        <div>
-          {/* <Table
-                columns={}
-                data={[]}
-            /> */}
-        </div>
+      <div className="flex flex-col gap-4 pt-5 h-full">
+        <ReelUploadSteps key={state.published} />
       </div>
-
-      {showUploadReelModal && (
-        <UploadReelModal onClose={() => setShowUploadReelModal(false)} />
-      )}
     </div>
   );
 };

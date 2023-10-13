@@ -3,7 +3,7 @@ import { Client } from "../../axios";
 export const getProducts = async (params) => {
   const {
     data: { data },
-  } = await Client.get("/quick-learning/feed", {
+  } = await Client.get("/items", {
     params,
   });
   return {

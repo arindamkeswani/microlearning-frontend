@@ -60,10 +60,10 @@ const UploadReelForm = () => {
   };
 
   return (
-    <div className="w-[80%] flex flex-col items-center mx-auto my-8 gap-4">
+    <div className="w-[80%] flex flex-col items-center mx-auto gap-4">
       <div
         className={twMerge(
-          "cursor-pointer relative w-full h-40 border-2 gap-4 border-dashed border-gray-400 bg-gray-200 flex flex-col justify-center items-center rounded",
+          "cursor-pointer mt-32 relative w-full h-40 border-2 gap-4 border-dashed border-gray-400 bg-gray-200 flex flex-col justify-center items-center rounded",
           isUploaded && "border-green-500 border-solid"
         )}
         onClick={() =>
