@@ -26,6 +26,11 @@ const tabs = [
     icon: "fa-chart-simple",
     route: "/leaderboard",
   },
+  {
+    name: "Dashboard",
+    icon: "fa-chart-simple",
+    route: "/dashboard",
+  },
 ];
 
 const AdminHomeScreen = () => {

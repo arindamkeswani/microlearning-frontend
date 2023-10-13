@@ -13,11 +13,13 @@ const TableComponent = ({ columns, data }) => {
         ))}
       </Table.Head>
       <Table.Body className="divide-y">
-        {data?.map((rowData, i) => (
+        {(data || [])?.map((rowData, rowIndex) => (
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            {columns.map((obj, i) => (
+            {columns.map((obj, columnIndex) => (
               <Table.Cell className={twMerge(obj.cellStyle)}>
-                {obj.cellRender ? obj.cellRender() : rowData[obj.key]}
+                {obj.cellRender
+                  ? obj.cellRender(rowData[obj?.key], rowData, rowIndex)
+                  : rowData[obj.key]}
               </Table.Cell>
             ))}
           </Table.Row>
