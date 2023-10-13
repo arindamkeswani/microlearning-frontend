@@ -1,9 +1,9 @@
-import { Client } from "../../axios";
+import { Client, CLOUDFRONT_BASE_URL } from "../../axios";
 
-export const getProducts = async (params) => {
+export const getProducts = async (params, route) => {
   const {
     data: { data },
-  } = await Client.get("/quick-learning/feed", {
+  } = await Client.get(route, {
     params,
   });
   return {

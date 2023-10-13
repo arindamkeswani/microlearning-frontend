@@ -4,9 +4,12 @@ import { twMerge } from "tailwind-merge";
 import cn from "clsx";
 import QuizForm from "./QuizForm";
 import { debounce } from "../../../utils";
+import { useRecordActivity } from "../../../api/hooks/useRecordActivity";
+import { useSelector } from "react-redux";
 
 const VideoCard = ({
   videoUrl,
+  videoId,
   avatarUrl,
   username,
   likes,
@@ -20,6 +23,8 @@ const VideoCard = ({
   listRef,
   setForceRender,
 }) => {
+  const { user } = useSelector((store) => store.user) || {};
+  const { recordActivityFetcher } = useRecordActivity();
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const [isMuted, setIsMuted] = useState(true);
@@ -39,15 +44,53 @@ const VideoCard = ({
     ) && video?.play();
   };
   const [showQuiz, setShowQuiz] = useState(false);
-  const [isCorrectAnswer, setIsCorrectAnswer] = useState(null);
   const [showTransScript, setShowTransScript] = useState(false);
+  const [totalDuration, setTotalDuration] = useState(0);
+  const [watchedDuration, setWatchedDuration] = useState(0);
 
   const handleVideoEnd = () => {
+    console.log("hello");
     setShowQuiz(true);
   };
 
-  const handleAnswerSelected = (isCorrect) => {
-    setIsCorrectAnswer(isCorrect);
+  const handleAnswerSelected = async (isCorrect) => {
+    console.log(isCorrect);
+    const payload = {
+      contentId: videoId,
+      user: user[0]._id,
+      attention: 100,
+    };
+    recordActivityFetcher(
+      {
+        payload,
+        route: "/quick-learning/record-activity",
+      },
+      {
+        onSuccess: () => {
+          recordActivityFetcher(
+            {
+              payload: { ...payload, language, selectedOptionIdx: isCorrect },
+              route: "/quick-learning/check",
+            },
+            {
+              onSuccess: () => {
+                setTimeout(() => {
+                  const boundingClientRect =
+                    containerRef?.current?.getBoundingClientRect();
+                  listRef.scrollTo({
+                    top:
+                      containerRef?.current?.offsetTop +
+                      boundingClientRect?.height,
+                    behavior: "smooth",
+                  });
+                  setShowQuiz(false);
+                }, 1000);
+              },
+            }
+          );
+        },
+      }
+    );
   };
   const [activeTab, setActiveTab] = useState("english");
 
@@ -89,10 +132,25 @@ const VideoCard = ({
         }, 500)();
       } else {
         videoRef?.current?.pause();
+        setShowQuiz(false);
       }
     });
   };
+  const recordAfterScroll = (totalDuration, watchedTime) => {
+    console.log(totalDuration);
+    console.log(watchedTime);
+    const attention = (watchedTime / totalDuration) * 100;
 
+    const payload = {
+      contentId: videoId,
+      user: user[0]._id,
+      attention: parseFloat(attention.toFixed(1)),
+    };
+    recordActivityFetcher({
+      payload,
+      route: "/quick-learning/record-activity",
+    });
+  };
   return (
     <div
       name="scroll-to-element"
@@ -112,6 +170,14 @@ const VideoCard = ({
           controls
           ref={videoRef}
           onEnded={handleVideoEnd}
+          onPause={() => {
+            if (videoRef.current) {
+              recordAfterScroll(
+                videoRef.current.duration,
+                videoRef.current.currentTime
+              );
+            }
+          }}
           className={twMerge(
             cn(`w-full h-full object-cover rounded-lg z-10`, {
               "opacity-[0.8]": showQuiz,
@@ -126,14 +192,22 @@ const VideoCard = ({
             question={question?.en ? question?.en : question?.hi}
             options={options?.en ? options?.en : options?.hi}
             correctAnswer={
-              correctOption.en
+              correctOption.en || correctOption.en === 0
                 ? options?.en[correctOption.en]
                 : options?.hi[correctOption.hi]
             }
             onAnswerSelected={handleAnswerSelected}
             onClose={() => {
-              setShowQuiz(false);
-              replayVideo();
+              const boundingClientRect =
+                containerRef?.current?.getBoundingClientRect();
+              listRef.scrollTo({
+                top:
+                  containerRef?.current?.offsetTop + boundingClientRect?.height,
+                behavior: "smooth",
+              });
+              setTimeout(() => {
+                setShowQuiz(false);
+              }, 1000);
             }}
           />
         )}
