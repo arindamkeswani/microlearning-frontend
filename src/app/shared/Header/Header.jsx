@@ -10,12 +10,12 @@ const Header = () => {
   return (
     <>
       {!(Object.keys(user?.[0] || user || {}).length <= 1) && (
-        <nav className="flex justify-between bg-white items-center w-full h-[75px] z-[999] px-2.5 sm:px-7 py-4 shadow-lg fixed top-0 left-0">
+        <nav className="flex justify-between bg-white items-center w-full h-[75px] z-[10] px-2.5 sm:px-7 py-4 shadow-lg fixed top-0 left-0">
           {/* left section */}
           <div className="flex gap-2 sm:gap-4 items-center cursor-pointer">
             <img
               className="h-full w-[2.5rem] object-cover"
-              src="/Images/Logo_1.jpg"
+              src="/pw_logo.jpeg"
               alt=""
             />
             <h3 className="text-sm sm:text-base whitespace-nowrap">

@@ -10,9 +10,12 @@ export const uploadReelSlice = createSlice({
       const newState = action.payload;
       Object.assign(state, newState);
     },
+    removeState: (state, payload) => {
+      return initialState;
+    },
   },
 });
 
-export const { updateState } = uploadReelSlice.actions;
+export const { updateState, removeState } = uploadReelSlice.actions;
 
 export default uploadReelSlice.reducer;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import cn from "clsx";
 import { createRoutes } from "../../App";
-// import { routes } from "./routes";
 import { Routes } from "react-router-dom";
 import SideNavbar from "../shared/SideNavbar/SideNavbar";
 import { routes } from "./routes";
@@ -26,6 +25,11 @@ const tabs = [
     name: "Leaderboard",
     icon: "fa-chart-simple",
     route: "/leaderboard",
+  },
+  {
+    name: "Dashboard",
+    icon: "fa-chart-simple",
+    route: "/dashboard",
   },
 ];
 
